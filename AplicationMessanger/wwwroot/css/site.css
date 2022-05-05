@@ -9,10 +9,161 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
   margin-bottom: 60px;
 }
+/*___________________________________________________________________
+    Login/Registration
+*/
+.gridContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+}
+.gridContainer .gridForm {
+    display: flex;
+    justify-content: center;
+}
+.gridContainer .form {
+    flex-direction: column;
+    display: flex;
+    margin-top: 125px;
+    justify-content: flex-start;
+    width: 75%;
+}
+.gridForm.gridForm .form {
+    margin-top: 70px; 
+}
+    .gridContainer .form .form-head {
+        margin-top: 30px;
+        margin-bottom: 37px;
+    }
+    .gridContainer .form .form-head_underText {
+        font-size: 16px;
+        color: #828282;
+        font-weight: 400;
+        margin-top: 5px;
+    }
+    .gridContainer h1 {
+        font-weight: 700;
+        font-size: 36px;
+        margin: 0;
+    }
+    .gridContainer .form-input input {
+        margin-top: 25px;
+        border: 1px solid #828282;
+        border-radius: 28px;
+        height: 45px;
+        padding: 0 15px;
+}
+.form-input {
+    display: flex;
+    margin-bottom: 25px;
+    flex-direction: column;
+    justify-content: center;
+}
+    .form-input label {
+        font-weight: 500;
+        font-size: 18px;
+    }
+/*.gridFormContainer .formInput:last-child {
+        margin-bottom: 0px;
+}*/
+.gridContainer span {
+        color: #5138EE;
+    }
+.gridContainer .submit {
+    width: 100%;
+    margin-top: 35px;
+    height: 50px;
+    background: #5138EE;
+    border-radius: 28px;
+    color: #FFFFFF;
+    outline: none;
+    border: none;
+    transition: 1s;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+.gridContainer .checkbox {
+    font-weight: 500;
+    font-size: 16px;
+}
+.form-check-input:checked {
+    background-color: #5138EE;
+    border-color: #5138EE;
+}
+.register-reminder {
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.register-reminder a {
+        text-decoration: none;
+    }
+.gridContainer .Ad-Img {
+    height: 100vh;
+    position: relative;
+    background: #5138EE;
+}
+.gridContainer .top-left_block svg {
+    display: block;
+    position: absolute;
+    height: 353px;
+    z-index: 0;
+    width: 290px;
+}
+.gridContainer .top-right_block {
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    z-index: 0;
+    transform: translateY(-100%) translateX(-100%) rotate(180deg);
+    height: 353px;
+
+}
+    .gridContainer .top-right_block svg {
+        height: 353px;
+        width: 290px;
+    }
+.gridContainer .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    transform: translateZ(0);
+color: #FFFFFF;
+}
+    .gridContainer .wrapper .wrapper-img {
+        z-index: 2;
+       
+    }
+        .gridContainer .wrapper .wrapper-img svg {
+            border-radius: 25px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            z-index: 3;
+        }
+    .gridContainer .wrapper p {
+        font-weight: 400;
+    }
+    .gridContainer .wrapper h2 {
+        font-weight: 500;
+    }
+    .gridContainer .form .form-baseInfo {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: space-between;
+    }

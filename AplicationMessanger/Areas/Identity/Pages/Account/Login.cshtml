@@ -2,11 +2,77 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Login";
 }
+<div class="gridContainer">
+    <div class="gridForm">
+        <section class="form">
+            <div class="form-head">
+                <h1>@ViewData["Title"]</h1>
+                <p class="form-head_underText">Simple way to join in your account</p>
+            </div>
+            <form id="account" method="post">
+                <div class="form-input">
+                    <label asp-for="Input.Email">Email<span>*</span></label>
+                    <input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="mail@website.com">
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-input">
+                    <label asp-for="Input.Password">Password<span>*</span></label>
+                    <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="password" type="password">
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="Input.RememberMe"/>
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+                <button type="submit" class="submit">Login</button>
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+                <div class="register-reminder">
+                    <p>Not registered yet?<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><span> Create an Account</span></a> </p>
+                </div>
+            </form>
+        </section>
+    </div>
+   
+    <section class="Ad-Img">
+        <div class="top-left_block">
+            <svg width="354" height="430" viewBox="0 0 354 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="118" height="167" fill="#3521B5"/>
+                <rect x="82" width="154" height="143" fill="#3521B5"/>
+                <path d="M216 0L354 0V121C354 133.15 344.15 143 332 143H216L216 0Z" fill="#3521B5"/>
+                <rect y="143" width="138" height="143" fill="#3521B5"/>
+                <path d="M106 117L236 117L236 264C236 276.15 226.15 286 214 286H106L106 117Z" fill="#3521B5"/>
+                <path d="M0 276H118L118 408C118 420.15 108.15 430 96 430H0L0 276Z" fill="#3521B5"/>
+            </svg>
+
+        </div>
+        <div class="top-right_block">
+            <svg width="354" height="430" viewBox="0 0 354 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="118" height="167" fill="#3521B5"/>
+                <rect x="82" width="154" height="143" fill="#3521B5"/>
+                <path d="M216 0L354 0V121C354 133.15 344.15 143 332 143H216L216 0Z" fill="#3521B5"/>
+                <rect y="143" width="138" height="143" fill="#3521B5"/>
+                <path d="M106 117L236 117L236 264C236 276.15 226.15 286 214 286H106L106 117Z" fill="#3521B5"/>
+                <path d="M0 276H118L118 408C118 420.15 108.15 430 96 430H0L0 276Z" fill="#3521B5"/>
+            </svg>
+
+        </div>
+        <div class="wrapper">
+            <div class="wrapper-img"><img src="~/img/example.png"></div>
+
+            <h2>Join to new messanger</h2>
+            <p >Try new type of connection</p>
+        </div>
+    </section>
+</div>
+
+
+
+
+@*<div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
@@ -78,7 +144,7 @@
             }
         </section>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
