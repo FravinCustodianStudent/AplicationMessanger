@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
+using AplicationMessanger.Areas.Identity.Data;
 using AplicationMessanger.Data;
 using AplicationMessanger.Models.Entity;
+using AplicationMessanger.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AplicationMessanger.Controllers
 {
@@ -13,16 +17,43 @@ namespace AplicationMessanger.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AplicationMessangerContext _bd;
+        private readonly UserManager<AplicationMessangerUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, AplicationMessangerContext _bd)
+        public HomeController(ILogger<HomeController> logger, AplicationMessangerContext _bd,UserManager<AplicationMessangerUser> userManager)
         {
             _logger = logger;
             this._bd = _bd;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? ChatId)
         {
-            return View();
+            _logger.LogInformation($"Index has been called with chatId {ChatId}");
+            MainVM vm = new MainVM();
+            vm.User = _bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User));
+            vm.Chats = _bd.Chats.Where(u => u.Users.Contains(vm.User))
+                .ToList();
+            if (ChatId!=null)
+            {
+                vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == ChatId).ToList();
+                
+            }
+            else
+            {
+
+                if (vm.Chats.Count>0)
+                {
+                    ChatId = vm.Chats.FirstOrDefault(x => x.Users.Contains(vm.User)).Id;
+                    vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == ChatId).ToList();
+                }
+
+            }
+
+            _logger.LogInformation($"Index has created ViewModel with:\nUser:{vm.User}" +
+                                   $"\nChats:{vm.Chats}" +
+                                   $"\nMessages:{vm.ChatMessages}");
+
+            return View(vm);
         }
 
         [HttpPost]

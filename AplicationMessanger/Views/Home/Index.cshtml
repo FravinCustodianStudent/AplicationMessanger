@@ -1,5 +1,6 @@
 ﻿
-
+@using AplicationMessanger.Models.ViewModel
+@model AplicationMessanger.Models.ViewModel.MainVM
 <div class="main"><section class="main-panel">
     <nav>
         <div class="panel">
@@ -27,23 +28,38 @@
         </div>
     </nav>
     <div class="menu-panel">
-        <div class="menu-panel_header"><h1>Messages</h1>
+        <div class="menu-panel_header">
+            <a asp-controller="Group" asp-action="Index"><img src="~/img/plus-circle.svg" alt="circle"></a> 
+            <h1>Messages</h1>
             <span class="active_menu_panel">All</span>
             <span class="">Chats</span>
-            <span class="">Personal</span></div>
+            <span class="">Personal</span>
+        </div>
         <div class="menu-panel_groups">
-            <div class="group">
-                <div class="icon">
-                    <img src="img/placeholder.png" alt="img">
-                </div>
-                <div class="group_item">
-                    <h2>Name</h2>
-                    <h3>lorem lorem</h3>
-                </div>
-                <div class="group_timeItem"><h4>13:25</h4></div>
 
-            </div>
+            @{
+                if (Model.Chats.Count>0)
+                {
+                    foreach (var chat in Model.Chats)
+                    {
+                        <div class="group">
+                            <div class="icon">
+                                <img src="img/placeholder.png" alt="img">
+                            </div>
+                            <div class="group_item">
+                                <h2>@chat.Name</h2> 
+                                <h3>lorem lorem</h3>
+                            </div>
+                            <div class="group_timeItem"><h4>13:25</h4></div>
 
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p text-alight="center">empty</p>
+                }
+            }
 @*            <div class="group">
                 <div class="icon">
                     <img src="img/placeholder.png" alt="img">
@@ -78,8 +94,55 @@
     </svg>
     </div>
   </div>
-  <div class="message-part_container">
-@*  <div class="message-fromAnotherUser">
+    <div class="message-part_container">
+        
+            @{
+                if (Model.ChatMessages!=null)
+                {
+                    foreach (var mes in Model.ChatMessages)
+                    {
+                        if (mes.User.Id ==Model.User.Id)
+                        {
+                            <div class="right-message">
+                                <div class="message-personal">
+                                    <div class="message-container">
+                                        <div class="message-container_descr">
+                                            <div class="message-container_descr-name">You</div>
+                                            <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
+                                        </div>
+                                        <div class="message-container-content">
+                                            <p>@mes.Content</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="message-fromAnotherUser">
+                                <img src="~/img/placeholder.png" alt="avatar">
+                                <div class="message-container">
+                                    <div class="message-container_descr">
+                                        <div class="message-container_descr-name">@Model.User.UserName</div>
+                                        <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
+                                    </div>
+                                    <div class="message-container-content">
+                                        <p>@mes.Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else if(Model.Chats.Count==0)
+                {
+                    <p>Placeholder for creation</p>
+                
+            }
+        }
+        
+
+        @*  <div class="message-fromAnotherUser">
     <img src="img/placeholder.png" alt="avatar">
     <div class="message-container">
       <div class="message-container_descr">
@@ -104,7 +167,7 @@
         </div>
       </div>
     </div>*@
-  </div>
+    </div>
   <div class="message-part_form">
     <form action="post">
       <input placeholder="Input text" type="text">

@@ -11,5 +11,6 @@ namespace AplicationMessanger.Areas.Identity.Data;
 public class AplicationMessangerUser : IdentityUser
 {
     public List<Chat> Chats { get; set; }
+    public string Avatar { get; set; }
 }
 

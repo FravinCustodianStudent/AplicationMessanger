@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+@model AplicationMessanger.Models.ViewModel.ClassCreationVM;
+}
+
+<section class="Form-ChatCreation">
+    <div class="main">
+        <img src="~/img/arrow.svg" alt="arrow" class="arrow">
+        <form method="post" asp-action="GetUsers">
+            <input type="text"  asp-for="SeacrhLine" placeholder="Search...">
+            <button type="submit">
+                <img src="~/img/loop.svg" alt="loop">
+            </button>
+        </form>
+        @if (Model.UsersFind.Count > 0)
+        {
+            @for (int i = 0; i < Model.UsersFind.Count; i++)
+            {
+                <div class="user-container">
+                    <div class="user">
+                        @if (Model.UsersFind[i].Avatar != "")
+                        {
+                            <img src="Model.UsersFind[i].Avatar.ToString();" alt="user"/>
+                            
+                        }
+                        else
+                        {
+                            <img src="~/img/placeholder.png" alt="user">
+                        }
+                        <h2>@Model.UsersFind[i].UserName</h2>
+                        <a asp-action="Create"  ></a><img src="~/img/plus-circle.svg" alt="add" class="confirm">
+                    </div>
+
+                </div>
+            }    
+        }
+       @* <div class="user-container">
+            <div class="user">
+                <img src="~/img/placeholder.png" alt="user">
+                <h2>Name</h2>
+                <img src="img/plus-circle.svg" alt="add" class="confirm">
+            </div>
+
+        </div>*@
+
+    </div>
+
+</section>
