@@ -15,6 +15,22 @@ public class AplicationMessangerContext : IdentityDbContext<AplicationMessangerU
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<AplicationMessangerUser>()
+            .HasMany(u => u.Chats)
+            .WithMany(c => c.Users);
+        builder.Entity<Chat>()
+            .HasMany(c => c.Users)
+            .WithMany(c => c.Chats);
+
+
+        //builder.Entity<ChatUsers>()
+        //    .HasOne(C => C.Сhat)
+        //    .WithMany(u => u.UserChat)
+        //    .HasForeignKey(i => i.ChatId);
+        //builder.Entity<ChatUsers>()
+        //    .HasOne(C => C.User)
+        //    .WithMany(u => u.UserChat)
+        //    .HasForeignKey(i => i.UserId);
         base.OnModelCreating(builder);
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.

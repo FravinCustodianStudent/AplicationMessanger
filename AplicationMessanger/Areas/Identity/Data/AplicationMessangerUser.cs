@@ -10,7 +10,7 @@ namespace AplicationMessanger.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the AplicationMessangerUser class
 public class AplicationMessangerUser : IdentityUser
 {
-    public List<Chat> Chats { get; set; }
+    public List<Chat> Chats { get; set; } = new List<Chat>();
     public string Avatar { get; set; }
 }
 

@@ -21,7 +21,10 @@
                     <img src="~/img/settings.svg" alt="settings" >
                 </div>
                 <div class="">
-                    <img src="~/img/exit.svg" alt="exit" class="footer">
+                    <form  id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button><img src="~/img/exit.svg" alt="exit" class="footer"></button>
+                    </form>
+                    
                 </div>
 
             </footer>
@@ -44,7 +47,15 @@
                     {
                         <div class="group">
                             <div class="icon">
-                                <img src="img/placeholder.png" alt="img">
+                                @if (chat.Avatar != "")
+                                {
+                                    <img src="~/img/avatars/@chat.Avatar" alt="img">
+                                }
+                                else
+                                {
+                                    <img src="~/img/placeholder.png" alt="img">
+                                }
+                                
                             </div>
                             <div class="group_item">
                                 <h2>@chat.Name</h2> 

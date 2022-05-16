@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AplicationMessanger.Migrations
 {
     [DbContext(typeof(AplicationMessangerContext))]
-    [Migration("20220514184731_Avatars")]
-    partial class Avatars
+    [Migration("20220516080648_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,11 +95,8 @@ namespace AplicationMessanger.Migrations
 
             modelBuilder.Entity("AplicationMessanger.Models.Entity.Chat", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
@@ -125,6 +122,10 @@ namespace AplicationMessanger.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ChatId1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -137,7 +138,7 @@ namespace AplicationMessanger.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatId");
+                    b.HasIndex("ChatId1");
 
                     b.HasIndex("UserId");
 
@@ -146,8 +147,8 @@ namespace AplicationMessanger.Migrations
 
             modelBuilder.Entity("AplicationMessangerUserChat", b =>
                 {
-                    b.Property<int>("ChatsId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChatsId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UsersId")
                         .HasColumnType("nvarchar(450)");
@@ -298,15 +299,17 @@ namespace AplicationMessanger.Migrations
 
             modelBuilder.Entity("AplicationMessanger.Models.Entity.Message", b =>
                 {
-                    b.HasOne("AplicationMessanger.Models.Entity.Chat", null)
+                    b.HasOne("AplicationMessanger.Models.Entity.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatId")
+                        .HasForeignKey("ChatId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AplicationMessanger.Areas.Identity.Data.AplicationMessangerUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Chat");
 
                     b.Navigation("User");
                 });

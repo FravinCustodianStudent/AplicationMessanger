@@ -4,15 +4,15 @@ using AplicationMessanger.Areas.Identity.Data;
 
 namespace AplicationMessanger.Models.Entity
 {
-    public class Message
+    public class ChatUsers
     {
         [Key]
         public int Id { get; set; }
-        public string Content { get; set; }
-        public DateTime Time { get; set; }
-        public int ChatId { get; set; }
-        public Chat Chat { get; set; }
+        public string UserId { get; set; }
 
         public AplicationMessangerUser User { get; set; }
+        public string ChatId { get; set; }
+
+        public Chat Сhat { get; set; }
     }
 }

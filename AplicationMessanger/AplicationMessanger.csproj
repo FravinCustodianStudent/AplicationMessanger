@@ -29,4 +29,9 @@
     <None Include="wwwroot\img\example.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\avatars\" />
+  </ItemGroup>
+
 </Project>

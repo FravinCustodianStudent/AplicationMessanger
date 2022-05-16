@@ -43,8 +43,9 @@ namespace AplicationMessanger.Controllers
 
                 if (vm.Chats.Count>0)
                 {
-                    ChatId = vm.Chats.FirstOrDefault(x => x.Users.Contains(vm.User)).Id;
+                    ChatId =int.Parse(vm.Chats.FirstOrDefault(x => x.Users.Contains(vm.User)).Id);
                     vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == ChatId).ToList();
+
                 }
 
             }
@@ -56,36 +57,36 @@ namespace AplicationMessanger.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        async public void PostMassage([FromBody] Message message)
-        {
-            _bd.Add(message);
-            _bd.SaveChangesAsync();
+        //[HttpPost]
+        //async public void PostMassage([FromBody] Message message)
+        //{
+        //    _bd.Add(message);
+        //    _bd.SaveChangesAsync();
             
-        }
+        //}
 
         
 
-        [HttpGet]
-        public List<Chat> GetChats(string userId)
-        {
-            var user = _bd.Users.FirstOrDefault(e => e.Id == userId);
-            var Chats = user.Chats;
-            return Chats;
+        //[HttpGet]
+        //public List<Chat> GetChats(string userId)
+        //{
+        //    var user = _bd.Users.FirstOrDefault(e => e.Id == userId);
+        //    var Chats = user.Chats.ToList();
+        //    return Chats;
 
-        }
-        [HttpGet]
-        public List<Message> GetMessages(int ChatId)
-        {
-            return _bd.Messages.Where(m => m.ChatId == ChatId).ToList(); ;
-        }
+        //}
+        //[HttpGet]
+        //public List<Message> GetMessages(int ChatId)
+        //{
+        //    return _bd.Messages.Where(m => m.ChatId == ChatId).ToList(); ;
+        //}
 
-        [HttpPost]
-        public void PostChat([FromBody]Chat chat)
-        {
-            _bd.Chats.Add(chat);
-            _bd.SaveChanges();
-        }
+        //[HttpPost]
+        //public void PostChat([FromBody]Chat chat)
+        //{
+        //    _bd.Chats.Add(chat);
+        //    _bd.SaveChanges();
+        //}
          
 
 

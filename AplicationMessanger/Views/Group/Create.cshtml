@@ -1,22 +1,30 @@
-﻿@*
+﻿
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+@model AplicationMessanger.Models.ViewModel.ClassCreationVM;
+
 }
 <section class="Form-ChatCreation-menu">
     <div class="main">
-        <img src="img/arrow.svg" alt="arrow" class="arrow">
+        <img src="~/img/arrow.svg" alt="arrow" class="arrow">
         <h1>Create new chat</h1>
-        <form action="post">
+        <form method="post" asp-action="CreateChat" enctype="multipart/form-data">
+            @for (int i = 0; i < @Model.AlreadyIsinChat.Count; i++)
+            {
+                <input asp-for="@Model.UsersNames[i]" value="@Model.AlreadyIsinChat[i].UserName" hidden/>
+            }
+            
             <div class="name"><label>Name<span>*</span></label>
-                <input type="text" placeholder="sample name"></div>
+                <input asp-for="CurrentChat.Name" type="text" placeholder="sample name"></div>
 
             <div class="file">
-                <label class="file-input"><input type="file"><img src="img/img.svg" alt="add"></label>
+                <label class="file-input"><input asp-for="@Model.Avatar" id="uploadBox" type="file"><img src="~/img/img.svg" alt="add"></label>
 
                 <div class="addUser">
-                    <a><img src="img/addUser.svg" alt="add"></a>
-                    <h2>Amount of User:</h2>
+                    <a ><img src="~/img/addUser.svg" alt="add"></a>
+                    <h2>Amount of User: @Model.AlreadyIsinChat.Count</h2>
                 </div>
             </div>
 

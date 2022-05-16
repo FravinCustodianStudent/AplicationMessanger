@@ -4,11 +4,12 @@ namespace AplicationMessanger.Models.Entity
 {
     public class Chat
     {
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
-        public List<Message> Messages { get; set; }
+        public List<Message> Messages { get; set; } = new List<Message>();
         public string Avatar { get; set; }
-        public List<AplicationMessangerUser> Users { get; set; }
+        public List<AplicationMessangerUser> Users { get; set; } = new List<AplicationMessangerUser>();
     }
 }

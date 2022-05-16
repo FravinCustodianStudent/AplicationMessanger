@@ -11,7 +11,7 @@
             <h1>@ViewData["Title"]</h1>
             <p class="form-head_underText">Simple way to join in your account</p>
         </div>
-        <form id="account" method="post">
+        <form id="account" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-input">
                 <label asp-for="Input.UserName">Username<span>*</span></label>
@@ -23,18 +23,28 @@
                 <input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="mail@website.com">
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-input">
-                <label asp-for="Input.Password">Password<span>*</span></label>
-                <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="password" type="password">
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-input">
-                <label asp-for="Input.ConfirmPassword">Confirm Password<span>*</span></label>
-                <input asp-for="Input.ConfirmPassword" autocomplete="current-password" aria-required="true" placeholder="confirm password" type="password">
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="submit">Register</button>
+            <div class="password-input">
+                <div class="form-input">
+                    <label asp-for="Input.Password">Password<span>*</span></label>
+                    <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="password" type="password">
+                    
+                </div>
+                <div class="form-input">
+                    <label asp-for="Input.ConfirmPassword">Confirm Password<span>*</span></label>
+                    <input asp-for="Input.ConfirmPassword" autocomplete="current-password" aria-required="true" placeholder="confirm password" type="password">
+                    
+                </div>
 
+            </div>
+            <div class="validation_passwords">
+                <span asp-validation-for="Input.Password" class="text-danger"></span><span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-input file">
+                <label class="file-input"><input type="file" asp-for="Input.Avatar"><img src="~/img/img.svg" alt="add"></label>
+            </div>
+            <span asp-validation-for="Input.Avatar"></span>
+            <button type="submit" class="submit">Register</button>
+            
             <div class="register-reminder">
                 <p>Already registered?<a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><span> Login</span></a> </p>
             </div>
@@ -133,4 +143,19 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    const form = document.querySelector("form"),
+    passwordInputContainer = document.querySelectorAll(".password");
+    for (const f of passwordInputContainer) {
+    console.log(f.style.width);
+    f.style.width = +(form.offsetWidth)*0.45 + "px";
+
+    }
+    window.addEventListener("resize",()=>{
+    for (const f of passwordInputContainer) {
+    f.style.width = +(form.offsetWidth)*0.45 + "px";
+    console.log(f.style.width);
+    }
+    });
+
+
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using AplicationMessanger.Areas.Identity.Data;
+using AplicationMessanger.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,13 +31,15 @@ namespace AplicationMessanger.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AplicationMessangerUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
             UserManager<AplicationMessangerUser> userManager,
             IUserStore<AplicationMessangerUser> userStore,
             SignInManager<AplicationMessangerUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace AplicationMessanger.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -103,6 +107,9 @@ namespace AplicationMessanger.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [Display(Name="Avatar")]
+            public IFormFile Avatar { get; set; }
         }
 
 
@@ -119,8 +126,19 @@ namespace AplicationMessanger.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                string webRootPath = _webHostEnvironment.WebRootPath + WC.ImagePath;
+                string fileName = Guid.NewGuid().ToString();
+                var extensions = Path.GetExtension(Input.Avatar.FileName);
+                var filePath = Path.Combine(webRootPath, fileName+extensions);
+                
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    Input.Avatar.CopyToAsync(stream);
+                }
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                user.Avatar = fileName+extensions;
+                user.EmailConfirmed = true;
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -137,8 +155,8 @@ namespace AplicationMessanger.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
