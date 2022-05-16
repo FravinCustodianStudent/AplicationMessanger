@@ -19,7 +19,6 @@ namespace AplicationMessanger.Controllers
         private readonly AplicationMessangerContext _bd;
         private readonly UserManager<AplicationMessangerUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public List<string> UserId { get; set; }
 
         public GroupController(AplicationMessangerContext bd, UserManager<AplicationMessangerUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
@@ -30,7 +29,7 @@ namespace AplicationMessanger.Controllers
 
 
         // GET: GroupController
-        public ActionResult Index(ClassCreationVM? vm)
+        public ActionResult Index(UserFormVM? vm)
         {
             if (vm == null)
             {
@@ -43,10 +42,13 @@ namespace AplicationMessanger.Controllers
 
         }
         [HttpPost]
-        public ActionResult Post([FromForm]ClassCreationVM vm)
+        public ActionResult Post([FromForm]string UserId)
         {
-            
-            vm.AlreadyIsinChat.Add(_userManager.Users.FirstOrDefault(u=> u.Id == vm.IdUser));
+
+             
+            ChatVM vm = new ChatVM();
+            vm.UserId = UserId;
+
             return View("Create", vm);
         }
 
@@ -56,21 +58,21 @@ namespace AplicationMessanger.Controllers
         //    return View();
         //}
         [HttpPost]
-        public IActionResult GetUsers(ClassCreationVM? vm)
+        public IActionResult GetUsers(UserFormVM? vm)
         {
-            if (vm.SeacrhLine!=null)
+            if (vm.SearchLine != null)
             {
-                vm.UsersFind = _userManager.Users.Where(u => u.UserName.Contains(vm.SeacrhLine) && u.UserName!=HttpContext.User.Identity.Name).ToList();
+                vm.Users = _userManager.Users.Where(u => u.UserName.Contains(vm.SearchLine) && u.UserName != HttpContext.User.Identity.Name).ToList();
             }
-            
-            return View("Index",vm);
+
+            return View("Index", vm);
         }
 
 
         // GET: GroupController/Create
         [HttpGet]
 
-        public ActionResult Create(ClassCreationVM vm)
+        public ActionResult Create(ChatVM? vm)
         {
             return View(vm);
         }
@@ -78,32 +80,45 @@ namespace AplicationMessanger.Controllers
         // POST: GroupController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateChat(ClassCreationVM potentialChat)
+        public IActionResult CreateChat(ChatVM potentialChat)
         {
-            
-                var chat = new Chat();
-                chat.Name = potentialChat.CurrentChat.Name;
-                for (int i = 0; i < potentialChat.UsersNames.Count; i++)
-                {
-                    var user = _userManager.Users.FirstOrDefault(u => u.UserName == potentialChat.UsersNames[i]);
-                    chat.Users.Add(user);
-                }
-                chat.Users.Add(_bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User)));
+
+            var Newchat = new Chat();
+            if (ModelState.IsValid)
+            {
+                Newchat.Name = potentialChat.ChatName;
+                //for (int i = 0; i < chat.UsersId.Count; i++)
+                //{
+                //    var user = _userManager.Users.FirstOrDefault(u => u.UserName == chat.UsersId[i]);
+                //    Newchat.Users.Add(user);
+                //}
+                
+                var user = _userManager.Users.FirstOrDefault(u => u.Id == potentialChat.UserId); 
+                Newchat.Users.Add(user);
+                Newchat.Users.Add(_bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User)));
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string fileName = Guid.NewGuid().ToString();
-                var extensions = Path.GetExtension(potentialChat.Avatar.Name);
-                var filePath = Path.Combine(webRootPath + WC.ImagePath, fileName+extensions);
-                using (var stream = new FileStream(filePath,FileMode.Create))
+                var extensions = Path.GetExtension(potentialChat.Avatar.FileName);
+                var filePath = Path.Combine(webRootPath + WC.ImagePath, fileName + extensions);
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     potentialChat.Avatar.CopyTo(stream);
                 }
 
-                chat.Avatar = fileName+extensions;
-                _bd.Chats.Add(chat);
+                Newchat.Avatar = fileName + extensions;
+                var Chats = _bd.Chats.ToList();
+                Newchat.Id = (Chats.Count + 1).ToString();
+                _bd.Chats.Add(Newchat);
                 _bd.SaveChanges();
-                
-            
-            return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                return View("Create", potentialChat);
+            }
+
+
+
+            return RedirectToAction("Index", "Home");
         }
 
         //// GET: GroupController/Edit/5

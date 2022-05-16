@@ -9,6 +9,7 @@ using AplicationMessanger.Models.Entity;
 using AplicationMessanger.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace AplicationMessanger.Controllers
 {
@@ -26,16 +27,17 @@ namespace AplicationMessanger.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(int? ChatId)
+        public IActionResult Index(string? ChatId)
         {
             _logger.LogInformation($"Index has been called with chatId {ChatId}");
             MainVM vm = new MainVM();
             vm.User = _bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User));
-            vm.Chats = _bd.Chats.Where(u => u.Users.Contains(vm.User))
+            vm.Chats = _bd.Chats.Include(u=>u.Users).Where(u=>u.Users.Contains(vm.User))
                 .ToList();
+
             if (ChatId!=null)
             {
-                vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == ChatId).ToList();
+                vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == int.Parse(ChatId)).ToList();
                 
             }
             else
@@ -43,8 +45,10 @@ namespace AplicationMessanger.Controllers
 
                 if (vm.Chats.Count>0)
                 {
-                    ChatId =int.Parse(vm.Chats.FirstOrDefault(x => x.Users.Contains(vm.User)).Id);
-                    vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == ChatId).ToList();
+                    ChatId = vm.Chats[0].Id;
+                    vm.chat = _bd.Chats.FirstOrDefault(c => c.Id == ChatId);
+                    vm.ChatMessages = vm.chat.Messages;
+                    //vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == int.Parse(ChatId)).ToList();
 
                 }
 

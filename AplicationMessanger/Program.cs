@@ -45,6 +45,12 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
 var app = builder.Build();
@@ -64,6 +70,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();;
 
+app.UseSession();
 app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllerRoute(

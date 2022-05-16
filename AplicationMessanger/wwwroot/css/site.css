@@ -417,6 +417,11 @@ nav {
                 height: 39px;
                 width: 39px;
             }
+                .message-part .message-part_header .message-part_cont .message-part_header-icon img {
+                    border-radius: 50%;
+                    height: 39px;
+                    width: 39px;
+                }
 
         .message-part .message-part_header .message-part_header-descr {
             margin-left: 8px;
@@ -639,7 +644,9 @@ nav {
         height: 750px;
         border-radius: 40px;
         padding-top: 62px;
+        
     }
+        
 
         .Form-ChatCreation .main .arrow {
             height: 73px;
@@ -761,8 +768,14 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
-
+.Form-ChatCreation-menu .main form span {
+    color: #5138EE;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
     .Form-ChatCreation-menu .main {
         box-sizing: border-box;
         position: relative;
@@ -771,9 +784,12 @@ nav {
         flex-direction: column;
         align-items: center;
         width: 935px;
-        height: 750px;
+        min-height: 750px;
+        max-height: 800px;
+        margin-bottom: 10px;
         border-radius: 40px;
         padding-top: 40px;
+        
     }
 
         .Form-ChatCreation-menu .main .arrow {

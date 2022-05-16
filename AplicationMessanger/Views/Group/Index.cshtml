@@ -4,56 +4,47 @@
 *@
 
 @{
-@model AplicationMessanger.Models.ViewModel.ClassCreationVM;   
-}
+    @model AplicationMessanger.Models.ViewModel.UserFormVM;   
+        }
 
 <section class="Form-ChatCreation">
     <div class="main">
-       <a asp-controller="Home" asp-action="Index"> <img src="~/img/arrow.svg" alt="arrow" class="arrow"></a>
+        <a asp-controller="Home" asp-action="Index"> <img src="~/img/arrow.svg" alt="arrow" class="arrow"></a>
         <form method="post" asp-action="GetUsers">
-            <input type="text"  asp-for="SeacrhLine" placeholder="Search...">
+            <input type="text"  asp-for="SearchLine" placeholder="Search...">
             <button type="submit">
                 <img src="~/img/loop.svg" alt="loop">
             </button>
         </form>
-        @if (Model.UsersFind.Count > 0)
+        @if (Model.Users!=null)
         {
-            @for (int i = 0; i < Model.UsersFind.Count; i++)
+            @for (int i = 0; i < Model.Users.Count; i++)
             {
                 <div class="user-container">
                     <div class="user">
-                        @if (Model.UsersFind[i].Avatar != "")
+                        @if (Model.Users[i].Avatar != "")
                         {
-                            <img src="~/img/avatars/@Model.UsersFind[i].Avatar" alt="user"/>
+                            <img src="~/img/avatars/@Model.Users[i].Avatar" alt="user"/>
                             
                         }
                         else
                         {
                             <img src="~/img/placeholder.png" alt="user">
                         }
-                        <h2>@Model.UsersFind[i].UserName</h2>
+                        <h2>@Model.Users[i].UserName</h2>
                         <form method="post" asp-action="Post">
-                            <input asp-for="@Model.IdUser" value="@Model.UsersFind[i].Id"  hidden/>
-                            @if (@Model.CurrentChat != null)
-                            {
-                                <input asp-for="IdUser" value="" hidden/>
-                            }
-                        
-                            @if (Model.CurrentChat != null && Model.CurrentChat.Users.Contains(Model.UsersFind[i]))
-                            {
-                                <button type="submit"><img src="~/img/minus.svg" alt="delete" class="confirm"></button>
-                            }
-                            else
-                            {
-                                <button type="submit"><img src="~/img/plus-circle.svg" alt="add" class="confirm"></button>
-                            }
+                            <input name="UserId" value="@Model.Users[i].Id"  hidden/>
+
+                            <button type="submit"><img src="~/img/plus-circle.svg" alt="delete" class="confirm"></button>
+                            
+                            
                         </form>
                     </div>
 
                 </div>
             }    
         }
-       @* <div class="user-container">
+        @* <div class="user-container">
             <div class="user">
                 <img src="~/img/placeholder.png" alt="user">
                 <h2>Name</h2>

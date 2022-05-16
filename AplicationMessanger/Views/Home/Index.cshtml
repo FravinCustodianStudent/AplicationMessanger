@@ -45,6 +45,7 @@
                 {
                     foreach (var chat in Model.Chats)
                     {
+                        
                         <div class="group">
                             <div class="icon">
                                 @if (chat.Avatar != "")
@@ -88,31 +89,56 @@
     </div>
 
 </section>
-<section class="message-part">
-  <div class="message-part_header">
-    <div class="message-part_cont">
-      <div class="message-part_header-icon"></div>
-      <div class="message-part_header-descr">
-        <h2>National flags chat</h2>
-        <h3>Online 2</h3></div>
-      </div>
+    <section class="message-part">
+        @if (Model.chat != null)
+        {
+            <div class="message-part_header">
+                <div class="message-part_cont">
+                    <div class="message-part_header-icon"><img src="~/img/avatars/@Model.chat.Avatar"/></div>
+                    <div class="message-part_header-descr">
+                        <h2>@Model.chat.Name</h2>
+                        <h3>Online @Model.chat.Users.Count</h3></div>
+                </div>
 
 
-    <div class="message-part_header-settings"><svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    </div>
-  </div>
-    <div class="message-part_container">
+                <div class="message-part_header-settings">
+                    <svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="message-part_header">
+                <div class="message-part_cont">
+                    <div class="message-part_header-icon"></div>
+                    <div class="message-part_header-descr">
+                        <h2>National flags chat</h2>
+                        <h3>Online 2</h3></div>
+                </div>
+
+
+                <div class="message-part_header-settings">
+                    <svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        }
         
+        <div class="message-part_container">
+
             @{
-                if (Model.ChatMessages!=null)
+                if (Model.ChatMessages != null)
                 {
                     foreach (var mes in Model.ChatMessages)
                     {
-                        if (mes.User.Id ==Model.User.Id)
+                        if (mes.User.Id == Model.User.Id)
                         {
                             <div class="right-message">
                                 <div class="message-personal">
@@ -145,15 +171,15 @@
                         }
                     }
                 }
-                else if(Model.Chats.Count==0)
+                else if (Model.Chats.Count == 0)
                 {
                     <p>Placeholder for creation</p>
-                
-            }
-        }
-        
 
-        @*  <div class="message-fromAnotherUser">
+                }
+            }
+
+
+            @*  <div class="message-fromAnotherUser">
     <img src="img/placeholder.png" alt="avatar">
     <div class="message-container">
       <div class="message-container_descr">
@@ -178,13 +204,13 @@
         </div>
       </div>
     </div>*@
-    </div>
-  <div class="message-part_form">
-    <form action="post">
-      <input placeholder="Input text" type="text">
-      <button type="submit"><img src="~/img/confirm.svg" alt="y"></button>
-    </form>
-  </div>
-</section></div>
+        </div>
+        <div class="message-part_form">
+            <form action="post">
+                <input placeholder="Input text" type="text">
+                <button type="submit"><img src="~/img/confirm.svg" alt="y"></button>
+            </form>
+        </div>
+    </section></div>
 
 @*<partial name="_LoginPartial"/>*@
