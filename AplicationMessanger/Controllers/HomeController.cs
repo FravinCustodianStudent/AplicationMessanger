@@ -27,26 +27,27 @@ namespace AplicationMessanger.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(string? ChatId)
+        public IActionResult Index(string? Id)
         {
-            _logger.LogInformation($"Index has been called with chatId {ChatId}");
+            _logger.LogInformation($"Index has been called with chatId {Id}");
             MainVM vm = new MainVM();
             vm.User = _bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User));
             vm.Chats = _bd.Chats.Include(u=>u.Users).Where(u=>u.Users.Contains(vm.User))
                 .ToList();
 
-            if (ChatId!=null)
+            if (Id != null)
             {
-                vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == int.Parse(ChatId)).ToList();
-                
+                vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == int.Parse(Id)).ToList();
+                vm.chat = _bd.Chats.FirstOrDefault(c => c.Id == Id);
+
             }
             else
             {
 
                 if (vm.Chats.Count>0)
                 {
-                    ChatId = vm.Chats[0].Id;
-                    vm.chat = _bd.Chats.FirstOrDefault(c => c.Id == ChatId);
+                    Id = vm.Chats[0].Id;
+                    vm.chat = _bd.Chats.FirstOrDefault(c => c.Id == Id);
                     vm.ChatMessages = vm.chat.Messages;
                     //vm.ChatMessages = _bd.Messages.Where(u => u.ChatId == int.Parse(ChatId)).ToList();
 

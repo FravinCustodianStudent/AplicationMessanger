@@ -45,26 +45,57 @@
                 {
                     foreach (var chat in Model.Chats)
                     {
-                        
-                        <div class="group">
-                            <div class="icon">
-                                @if (chat.Avatar != "")
-                                {
-                                    <img src="~/img/avatars/@chat.Avatar" alt="img">
-                                }
-                                else
-                                {
-                                    <img src="~/img/placeholder.png" alt="img">
-                                }
-                                
-                            </div>
-                            <div class="group_item">
-                                <h2>@chat.Name</h2> 
-                                <h3>lorem lorem</h3>
-                            </div>
-                            <div class="group_timeItem"><h4>13:25</h4></div>
+                        @if (chat.Id == Model.chat.Id)
+                        {
+                                <a asp-action="Index" asp-route-Id="@chat.Id">
+                                        <div class="group active">
+                                    <div class="icon">
+                                        @if (chat.Avatar != "")
+                                        {
+                                            <img src="~/img/avatars/@chat.Avatar" alt="img">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/img/placeholder.png" alt="img">
+                                        }
+                                                    
+                                    </div>
+                                    <div class="group_item">
+                                        <h2>@chat.Name</h2> 
+                                        <h3>lorem lorem</h3>
+                                    </div>
+                                    <div class="group_timeItem"><h4>13:25</h4></div>
 
-                        </div>
+                                </div>
+                                </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Index" asp-route-Id="@chat.Id">
+                                <div class="group">
+                                    <div class="icon">
+                                        @if (chat.Avatar != "")
+                                        {
+                                            <img src="~/img/avatars/@chat.Avatar" alt="img">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/img/placeholder.png" alt="img">
+                                        }
+                                
+                                    </div>
+                                    <div class="group_item">
+                                        <h2>@chat.Name</h2> 
+                                        <h3>lorem lorem</h3>
+                                    </div>
+                                    <div class="group_timeItem"><h4>13:25</h4></div>
+
+                                </div>
+                            </a>
+                                
+
+                        }
+                        
                     }
                 }
                 else
