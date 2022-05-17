@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model AplicationMessanger.Models.ViewModel.ChatChangeVM;
+@{
+    <section class="Form-ChatChange">
+        <div class="main">
+            <div class="arrow">
+                <a asp-action="Index" asp-controller="Home" asp-route-Id="@Model.ChatId"><img src="~/img/arrow.svg" alt="arrow"></a>
+            </div>
+            <header>
+                @if (Model.CurrentChat.Avatar != "")
+                {
+                    <div class="icon"><img src="~/img/avatars/@Model.CurrentChat.Avatar" alt="ava"></div>
+                }
+                else
+                {
+                    <div class="icon"><img src="~/img/placeholder.png" alt="ava"></div>
+                }
+                <h1>@Model.CurrentChat.Name</h1>
+            </header>
+            <form method="post" asp-action="Edit" enctype="multipart/form-data">
+                <input asp-for="ChatId" value="@Model.ChatId" hidden/>
+                <div class="form-head">
+                    <div class="name"><label>Name<span>*</span></label>
+                        <input asp-for="Name" type="text"></div>
+                    <span asp-validation-for="Name"></span>
+                    <div class="file">
+                        <label class="file-input">
+                            <input asp-for="NewAvatar" type="file"/>
+                            <img src="~/img/img.svg" alt="add">
+                        </label>
+                    </div>
+                    <span asp-validation-for="NewAvatar"></span>
+                </div>
+                <div class="users">
+                    <div class="users-change">
+                        <a>
+                            <div class="addUser"><img src="~/img/addUser.svg" alt="add">
+                            </div></a>
+                        <a>
+                            <div class="deleteUser"><img src="~/img/removeUser.svg" alt="minus"></div></a>
+                    </div>
+
+                    <p>Amount of users:@Model.CurrentChat.Users.Count</p>
+                </div>
+                <button type="submit">Change</button>
+            </form>
+        </div>
+    </section>
+}

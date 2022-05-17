@@ -464,10 +464,25 @@ nav {
                 font-weight: 300;
                 font-size: 14px;
             }
-
+        .message-part .message-part_header a {
+            position: absolute;
+            right: 22px;
+            height: 39px;
+            width: 39px;
+        }
         .message-part .message-part_header .message-part_header-settings {
             position: absolute;
             right: 22px;
+            border-radius: 50%;
+            background: #F1F2F6;
+            transition: background-color 1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 39px;
+            width: 39px;
+        }
+        .message-part .message-part_header a .message-part_header-settings {
             border-radius: 50%;
             background: #F1F2F6;
             transition: background-color 1s;
@@ -956,3 +971,150 @@ nav {
 .form-input input[type="file"] {
     display: none;
 }
+.Form-ChatChange {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #5138ED;
+}
+
+    .Form-ChatChange .main {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: #FFFFFF;
+        border-radius: 40px;
+        width: 935px;
+        height: 750px;
+        position: relative;
+        padding-top: 62px;
+    }
+
+        .Form-ChatChange .main .arrow {
+            height: 73px;
+            width: 89px;
+            position: absolute;
+            left: 60px
+        }
+
+        .Form-ChatChange .main header {
+            display: flex;
+            align-items: center;
+        }
+
+        .Form-ChatChange .main h1 {
+            font-weight: 500;
+            font-size: 42px;
+            margin-left: 18px;
+        }
+
+        .Form-ChatChange .main header img {
+            width: 94px;
+            height: 94px;
+            border-radius: 50%;
+        }
+
+        .Form-ChatChange .main form {
+            margin-top: 100px;
+        }
+
+            .Form-ChatChange .main form .name {
+                display: flex;
+                flex-direction: column;
+            }
+
+                .Form-ChatChange .main form .name input {
+                    margin-top: 15px;
+                    width: 290px;
+                    padding: 0 39px;
+                    font-weight: 400;
+                    font-size: 20px;
+                    height: 40px;
+                    border: 1px solid #828282;
+                    border-radius: 28px;
+                }
+
+            .Form-ChatChange .main form .form-head {
+                display: flex;
+                align-items: center;
+            }
+
+            .Form-ChatChange .main form input[type="file"] {
+                display: none;
+            }
+
+            .Form-ChatChange .main form .form-head .file {
+                margin-left: 15px;
+            }
+
+            .Form-ChatChange .main form .form-head .file-input {
+                background: #5138ED;
+                border-radius: 18px;
+                width: 100px;
+                height: 85px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+        .Form-ChatChange .main form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .Form-ChatChange .main form .users {
+                margin-top: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+                .Form-ChatChange .main form .users .users-change {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                    .Form-ChatChange .main form .users .users-change .addUser {
+                        width: 100px;
+                        height: 85px;
+                        background: #5138ED;
+                        border-radius: 18px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .Form-ChatChange .main form .users .users-change .deleteUser {
+                        margin-left: 30px;
+                        width: 100px;
+                        height: 85px;
+                        background: #CE1126;
+                        border-radius: 18px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                .Form-ChatChange .main form .users p {
+                    margin-top: 30px;
+                    font-weight: 400;
+                    font-size: 24px;
+                }
+
+            .Form-ChatChange .main form button {
+                border: none;
+                height: 75px;
+                width: 280px;
+                background: #5138ED;
+                border-radius: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                font-size: 21px;
+                color: #FFFFFF;
+            }

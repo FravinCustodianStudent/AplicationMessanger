@@ -121,11 +121,58 @@ namespace AplicationMessanger.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //// GET: GroupController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+         //GET: GroupController/Edit/5
+        public ActionResult Edit(string id)
+        {
+            ChatChangeVM vm = new ChatChangeVM();
+            vm.ChatId = id;
+            vm.CurrentChat = _bd.Chats.FirstOrDefault(c => c.Id == id);
+            vm.CurrentChat.Users = _userManager.Users.Where(u => u.Chats.Contains(_bd.Chats.FirstOrDefault(c => c.Id == id))).ToList();
+            return View(vm);
+        }
+
+        [HttpPost]
+        
+        public IActionResult Edit(ChatChangeVM chatForUpdate)
+        {
+            if (ModelState.IsValid)
+            {
+                chatForUpdate.CurrentChat = _bd.Chats.FirstOrDefault(c => c.Id == chatForUpdate.ChatId);
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Guid.NewGuid().ToString();
+                var extensions = Path.GetExtension(chatForUpdate.NewAvatar.FileName);
+
+                var oldFile = Path.Combine(webRootPath + WC.ImagePath, chatForUpdate.CurrentChat.Avatar);
+
+                var filePath = Path.Combine(webRootPath + WC.ImagePath, fileName + extensions);
+                if (System.IO.File.Exists(oldFile))
+                {
+                    System.IO.File.Delete(oldFile);
+                }
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    chatForUpdate.NewAvatar.CopyTo(stream);
+                }
+
+                var CurrentChat = chatForUpdate.CurrentChat;
+                CurrentChat.Name = chatForUpdate.Name;
+                CurrentChat.Avatar = fileName + extensions;
+
+                _bd.Chats.Update(CurrentChat);
+                _bd.SaveChanges();
+
+
+            }
+            else
+            {
+                return View(chatForUpdate);
+            }
+
+            return RedirectToAction("Index", "Home", chatForUpdate.ChatId);
+
+
+
+        }
 
         //// POST: GroupController/Edit/5
         //[HttpPost]

@@ -8,7 +8,7 @@
 }
 <section class="Form-ChatCreation-menu">
     <div class="main">
-        <img src="~/img/arrow.svg" alt="arrow" class="arrow">
+        <a asp-action="Index" asp-controller="Home"><img src="~/img/arrow.svg" alt="arrow" class="arrow"></a>
         <h1>Create new chat</h1>
         <form method="post" asp-action="CreateChat" enctype="multipart/form-data">
 
@@ -19,7 +19,7 @@
                 <label class="file-input"><input asp-for="Avatar" id="uploadBox" type="file"><img src="~/img/img.svg" alt="add"></label>
                 <span asp-validation-for="Avatar"></span>
                 <div class="addUser">
-                    <a ><img src="~/img/addUser.svg" alt="add"></a>
+                    @*<a ><img src="~/img/avatars/" alt="add"></a>*@
                     <input asp-for="UserId" value="@Model.UserId" hidden/>
                     <h2>Amount of User: 2</h2>
                 </div>
