@@ -38,7 +38,7 @@
                         <a asp-action="AddUsers" asp-route-Id="@Model.ChatId">
                             <div class="addUser"><img src="~/img/addUser.svg" alt="add">
                             </div></a>
-                        <a>
+                        <a asp-action="DeleteUser" asp-route-Id="@Model.ChatId">
                             <div class="deleteUser"><img src="~/img/removeUser.svg" alt="minus"></div></a>
                     </div>
 

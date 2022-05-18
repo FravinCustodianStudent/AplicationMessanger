@@ -184,58 +184,66 @@ namespace AplicationMessanger.Controllers
         {
 
             AddUserVM vm = new AddUserVM();
-            var Chat = _bd.Chats.FirstOrDefault(c => c.Id==Id);
-            
+            var Chat = _bd.Chats.FirstOrDefault(c => c.Id == Id);
+
             vm.ChatId = Chat.Id;
             vm.CurrentChat = Chat;
 
             return View(vm);
         }
+
         [HttpPost]
         public IActionResult AddUsers(AddUserVM vm)
         {
             var Chat = _bd.Chats.FirstOrDefault(c => c.Id == vm.ChatId);
             var User = _userManager.Users.FirstOrDefault(u => u.Id == vm.UserId);
-                Chat.Users.Add(User);
-                _bd.Chats.Update(Chat);
-                _bd.SaveChanges();
-                
-            return RedirectToAction("Edit",new {id=Chat.Id});
+            Chat.Users.Add(User);
+            _bd.Chats.Update(Chat);
+            _bd.SaveChanges();
+
+            return RedirectToAction("Edit", new {id = Chat.Id});
         }
 
         public IActionResult GetUsersForUpdate(AddUserVM vm)
         {
 
             vm.CurrentChat = _bd.Chats.FirstOrDefault(c => c.Id == vm.ChatId);
-            if (vm.SearchLine!="")
+            if (vm.SearchLine != "")
             {
-                
-                vm.Users = _userManager.Users.Where(u => u.UserName.Contains(vm.SearchLine) && !u.Chats.Contains(vm.CurrentChat)).ToList();
+
+                vm.Users = _userManager.Users
+                    .Where(u => u.UserName.Contains(vm.SearchLine) && !u.Chats.Contains(vm.CurrentChat)).ToList();
             }
 
             return View("AddUsers", vm);
         }
 
-        //// POST: GroupController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
-        //// GET: GroupController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        // GET: GroupController/Delete/5
+        [HttpGet]
+        public ActionResult DeleteUser(string Id)
+        {
+            DeleteUserVM vm = new DeleteUserVM();
+            vm.ChatId = Id;
+            var Chat = _bd.Chats.FirstOrDefault(c => c.Id == Id);
+            vm.Users = _userManager.Users.Where(u => u.Chats.Contains(Chat)).ToList();
+            return View(vm);
+        }
+        [HttpPost]
+        public ActionResult DeleteUser(DeleteUserVM vm)
+        {
+            var Chat = _bd.Chats.FirstOrDefault(c => c.Id == vm.ChatId);
+            var User = _userManager.Users.FirstOrDefault(u => u.Id == vm.UserId);
+            Chat.Users = _userManager.Users.Where(u => u.Chats.Contains(Chat)).ToList();
+            Chat.Messages = _bd.Messages.Where(m => m.Chat.Id == Chat.Id).ToList();
+            _bd.Chats.Remove(Chat);
+            _bd.SaveChanges();
+
+            Chat.Users.Remove(User);
+            _bd.Chats.Add(Chat);
+            _bd.SaveChanges();
+            return RedirectToAction("Edit", new { id = Chat.Id });
+        }
 
         //// POST: GroupController/Delete/5
         //[HttpPost]
