@@ -20,7 +20,8 @@ namespace AplicationMessanger.Controllers
         private readonly UserManager<AplicationMessangerUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public GroupController(AplicationMessangerContext bd, UserManager<AplicationMessangerUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public GroupController(AplicationMessangerContext bd, UserManager<AplicationMessangerUser> userManager,
+            IWebHostEnvironment webHostEnvironment)
         {
             _bd = bd;
             _userManager = userManager;
@@ -41,11 +42,12 @@ namespace AplicationMessanger.Controllers
             }
 
         }
+
         [HttpPost]
-        public ActionResult Post([FromForm]string UserId)
+        public ActionResult Post([FromForm] string UserId)
         {
 
-             
+
             ChatVM vm = new ChatVM();
             vm.UserId = UserId;
 
@@ -62,7 +64,8 @@ namespace AplicationMessanger.Controllers
         {
             if (vm.SearchLine != null)
             {
-                vm.Users = _userManager.Users.Where(u => u.UserName.Contains(vm.SearchLine) && u.UserName != HttpContext.User.Identity.Name).ToList();
+                vm.Users = _userManager.Users.Where(u =>
+                    u.UserName.Contains(vm.SearchLine) && u.UserName != HttpContext.User.Identity.Name).ToList();
             }
 
             return View("Index", vm);
@@ -92,8 +95,8 @@ namespace AplicationMessanger.Controllers
                 //    var user = _userManager.Users.FirstOrDefault(u => u.UserName == chat.UsersId[i]);
                 //    Newchat.Users.Add(user);
                 //}
-                
-                var user = _userManager.Users.FirstOrDefault(u => u.Id == potentialChat.UserId); 
+
+                var user = _userManager.Users.FirstOrDefault(u => u.Id == potentialChat.UserId);
                 Newchat.Users.Add(user);
                 Newchat.Users.Add(_bd.Users.FirstOrDefault(u => u.Id == _userManager.GetUserId(HttpContext.User)));
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -121,18 +124,19 @@ namespace AplicationMessanger.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-         //GET: GroupController/Edit/5
+        //GET: GroupController/Edit/5
         public ActionResult Edit(string id)
         {
             ChatChangeVM vm = new ChatChangeVM();
             vm.ChatId = id;
             vm.CurrentChat = _bd.Chats.FirstOrDefault(c => c.Id == id);
-            vm.CurrentChat.Users = _userManager.Users.Where(u => u.Chats.Contains(_bd.Chats.FirstOrDefault(c => c.Id == id))).ToList();
+            vm.CurrentChat.Users = _userManager.Users
+                .Where(u => u.Chats.Contains(_bd.Chats.FirstOrDefault(c => c.Id == id))).ToList();
             return View(vm);
         }
 
         [HttpPost]
-        
+
         public IActionResult Edit(ChatChangeVM chatForUpdate)
         {
             if (ModelState.IsValid)
@@ -149,6 +153,7 @@ namespace AplicationMessanger.Controllers
                 {
                     System.IO.File.Delete(oldFile);
                 }
+
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     chatForUpdate.NewAvatar.CopyTo(stream);
@@ -172,6 +177,43 @@ namespace AplicationMessanger.Controllers
 
 
 
+        }
+
+        [HttpGet]
+        public IActionResult AddUsers(string Id)
+        {
+
+            AddUserVM vm = new AddUserVM();
+            var Chat = _bd.Chats.FirstOrDefault(c => c.Id==Id);
+            
+            vm.ChatId = Chat.Id;
+            vm.CurrentChat = Chat;
+
+            return View(vm);
+        }
+        [HttpPost]
+        public IActionResult AddUsers(AddUserVM vm)
+        {
+            var Chat = _bd.Chats.FirstOrDefault(c => c.Id == vm.ChatId);
+            var User = _userManager.Users.FirstOrDefault(u => u.Id == vm.UserId);
+                Chat.Users.Add(User);
+                _bd.Chats.Update(Chat);
+                _bd.SaveChanges();
+                
+            return RedirectToAction("Edit",new {id=Chat.Id});
+        }
+
+        public IActionResult GetUsersForUpdate(AddUserVM vm)
+        {
+
+            vm.CurrentChat = _bd.Chats.FirstOrDefault(c => c.Id == vm.ChatId);
+            if (vm.SearchLine!="")
+            {
+                
+                vm.Users = _userManager.Users.Where(u => u.UserName.Contains(vm.SearchLine) && !u.Chats.Contains(vm.CurrentChat)).ToList();
+            }
+
+            return View("AddUsers", vm);
         }
 
         //// POST: GroupController/Edit/5

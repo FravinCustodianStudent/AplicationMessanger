@@ -1,5 +1,9 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    
+}
+img {
+    object-fit: cover;
 }
 
 @media (min-width: 768px) {

@@ -6,7 +6,7 @@
     <section class="Form-ChatChange">
         <div class="main">
             <div class="arrow">
-                <a asp-action="Index" asp-controller="Home" asp-route-Id="@Model.ChatId"><img src="~/img/arrow.svg" alt="arrow"></a>
+                <a asp-action="Index" asp-controller="Home"><img src="~/img/arrow.svg" alt="arrow"></a>
             </div>
             <header>
                 @if (Model.CurrentChat.Avatar != "")
@@ -35,7 +35,7 @@
                 </div>
                 <div class="users">
                     <div class="users-change">
-                        <a>
+                        <a asp-action="AddUsers" asp-route-Id="@Model.ChatId">
                             <div class="addUser"><img src="~/img/addUser.svg" alt="add">
                             </div></a>
                         <a>
@@ -46,6 +46,7 @@
                 </div>
                 <button type="submit">Change</button>
             </form>
+
         </div>
     </section>
 }
