@@ -197,10 +197,10 @@
                     else
                     {
                         <div class="message-fromAnotherUser">
-                            <img src="~/img/placeholder.png" alt="avatar">
+                            <img src="~/img/@mes.User.Avatar" alt="avatar">
                             <div class="message-container">
                                 <div class="message-container_descr">
-                                    <div class="message-container_descr-name">@Model.User.UserName</div>
+                                    <div class="message-container_descr-name">@mes.User.UserName</div>
                                     <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
                                 </div>
                                 <div class="message-container-content">
@@ -264,9 +264,50 @@
             .build();
 
         let chatId = document.getElementById("ChatId").value;
+        const messageContainerPart = document.querySelector(".message-part_container");
+
         connection.on("ReceiveMessage",
-            function(message) {
-                console.log(message+" in chat"+chatId);
+            function(message,date,userId,pathToImage,userName) {
+                if ("@Model.User.Id" === userId) {
+                    const messageContainer = document.createElement("div");
+                    
+                    const inner = ` <div class="message-personal">
+                                <div class="message-container">
+                                    <div class="message-container_descr">
+                                        <div class="message-container_descr-name">You</div>
+                                        <div class="message-container_descr-time"> `+date+`</div>
+                                    </div>
+                                    <div class="message-container-content">
+                                        <p>`+message+`</p>
+                                    </div>
+                                </div>
+                            </div>`;
+                    messageContainer.innerHTML = inner;
+                    
+                    messageContainerPart.appendChild(messageContainer);
+                    message.style.className = "right-message";
+                    
+                } else {
+                    const messageContainer = document.createElement("div");
+                    
+                    const inner = `<img src="~/img/`+pathToImage+`" alt="avatar">
+                            <div class="message-container">
+                                <div class="message-container_descr">
+                                    <div class="message-container_descr-name">`+userName+`</div>
+                                    <div class="message-container_descr-time">`+date+`</div>
+                                </div>
+                                <div class="message-container-content">
+                                    <p>`+message+`</p>
+                                </div>
+                            </div>`;
+                    messageContainer.innerHTML = inner;
+                   
+                    messageContainerPart.appendChild(messageContainer);
+                    
+                    message.style.className = "fromAnotherUser";
+
+                }
+                console.log(message+" in chat "+chatId + " by " + userId + " on " +date );
             });
 
         connection.on("UserConnected",(connectionId) => {
@@ -295,15 +336,19 @@
 
 
         submit.addEventListener("click",(e) => {
+            e.preventDefault();
             const inputValue = document.getElementById("input").value;
+            let date = new Date();
+            date.toString();
+            let user = "@Model.User.Id.ToString()";
             if (inputValue != "" && inputValue != null) {
-                connection.invoke("SendMessageToChat", chatId, inputValue).catch((e) => {
+                connection.invoke("SendMessageToChat", chatId, inputValue,date,user).catch((e) => {
                     return console.error(e.toString());
                 })
             } else {
                 console.log("Input Should be filled");
             }
-            e.preventDefault();
+            
         });
 
         
