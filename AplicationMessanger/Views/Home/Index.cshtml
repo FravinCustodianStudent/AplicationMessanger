@@ -1,7 +1,9 @@
 ﻿
 @using AplicationMessanger.Models.ViewModel
 @model AplicationMessanger.Models.ViewModel.MainVM
-<div class="main"><section class="main-panel">
+<div class="main">
+
+<section class="main-panel">
     <nav>
         <div class="panel">
             <div class="logo">
@@ -9,22 +11,26 @@
             </div>
             <div class="panel-menu">
                 <div class="selected">
-                    <img src="~/img/message.svg" alt="home">
+                    <a asp-action="Index" asp-controller="Home"><img src="~/img/message.svg" alt="home"></a>
+
                 </div>
                 <div class="">
-                    <img src="~/img/account.svg" alt="account">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                        <img src="~/img/account.svg" alt="account">
+                    </a>
+
                 </div>
 
             </div>
             <footer>
                 <div class="">
-                    <img src="~/img/settings.svg" alt="settings" >
+                    <img src="~/img/settings.svg" alt="settings">
                 </div>
                 <div class="">
-                    <form  id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
                         <button><img src="~/img/exit.svg" alt="exit" class="footer"></button>
                     </form>
-                    
+
                 </div>
 
             </footer>
@@ -32,7 +38,7 @@
     </nav>
     <div class="menu-panel">
         <div class="menu-panel_header">
-            <a asp-controller="Group" asp-action="Index"><img src="~/img/plus-circle.svg" alt="circle"></a> 
+            <a asp-controller="Group" asp-action="Index"><img src="~/img/plus-circle.svg" alt="circle"></a>
             <h1>Messages</h1>
             <span class="active_menu_panel">All</span>
             <span class="">Chats</span>
@@ -41,14 +47,14 @@
         <div class="menu-panel_groups">
 
             @{
-                if (Model.Chats.Count>0)
+                if (Model.Chats.Count > 0)
                 {
                     foreach (var chat in Model.Chats)
                     {
                         @if (chat.Id == Model.chat.Id)
                         {
-                                <a asp-action="Index" asp-route-Id="@chat.Id">
-                                        <div class="group active">
+                            <a asp-action="Index" asp-route-Id="@chat.Id">
+                                <div class="group active">
                                     <div class="icon">
                                         @if (chat.Avatar != "")
                                         {
@@ -58,16 +64,16 @@
                                         {
                                             <img src="~/img/placeholder.png" alt="img">
                                         }
-                                                    
+
                                     </div>
                                     <div class="group_item">
-                                        <h2>@chat.Name</h2> 
+                                        <h2>@chat.Name</h2>
                                         <h3>lorem lorem</h3>
                                     </div>
                                     <div class="group_timeItem"><h4>13:25</h4></div>
 
                                 </div>
-                                </a>
+                            </a>
                         }
                         else
                         {
@@ -82,20 +88,20 @@
                                         {
                                             <img src="~/img/placeholder.png" alt="img">
                                         }
-                                
+
                                     </div>
                                     <div class="group_item">
-                                        <h2>@chat.Name</h2> 
+                                        <h2>@chat.Name</h2>
                                         <h3>lorem lorem</h3>
                                     </div>
                                     <div class="group_timeItem"><h4>13:25</h4></div>
 
                                 </div>
                             </a>
-                                
+
 
                         }
-                        
+
                     }
                 }
                 else
@@ -103,7 +109,7 @@
                     <p text-alight="center">empty</p>
                 }
             }
-@*            <div class="group">
+            @*            <div class="group">
                 <div class="icon">
                     <img src="img/placeholder.png" alt="img">
                 </div>
@@ -120,78 +126,65 @@
     </div>
 
 </section>
-    <section class="message-part">
-        @if (Model.chat != null)
-        {
-            <div class="message-part_header">
-                <div class="message-part_cont">
-                    <div class="message-part_header-icon"><img src="~/img/avatars/@Model.chat.Avatar"/></div>
-                    <div class="message-part_header-descr">
-                        <h2>@Model.chat.Name</h2>
-                        <h3>Online @Model.chat.Users.Count</h3></div>
-                </div>
-
-                <a asp-controller="Group" asp-action="Edit" asp-route-id="@Model.chat.Id"><div class="message-part_header-settings">
-                    <svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div></a>
-                
+<section class="message-part">
+    @if (Model.chat != null)
+    {
+        <input type="text" value="@Model.chat.Id" hidden id="ChatId"/>
+        <div class="message-part_header">
+            <div class="message-part_cont">
+                <div class="message-part_header-icon"><img src="~/img/avatars/@Model.chat.Avatar"/></div>
+                <div class="message-part_header-descr">
+                    <h2>@Model.chat.Name</h2>
+                    <h3>Online @Model.chat.Users.Count</h3></div>
             </div>
-        }
-        else
-        {
-            <div class="message-part_header">
-                <div class="message-part_cont">
-                    <div class="message-part_header-icon"></div>
-                    <div class="message-part_header-descr">
-                        <h2>National flags chat</h2>
-                        <h3>Online 2</h3></div>
-                </div>
 
-
+            <a asp-controller="Group" asp-action="Edit" asp-route-id="@Model.chat.Id">
                 <div class="message-part_header-settings">
                     <svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                </div>
-            </div>
-        }
-        
-        <div class="message-part_container">
+                </div></a>
 
-            @{
-                if (Model.ChatMessages != null)
+        </div>
+    }
+    else
+    {
+        <input type="text" value="-1" hidden id="ChatId"/>
+        <div class="message-part_header">
+            <div class="message-part_cont">
+                <div class="message-part_header-icon"></div>
+                <div class="message-part_header-descr">
+                    <h2>National flags chat</h2>
+                    <h3>Online 2</h3></div>
+            </div>
+
+
+            <div class="message-part_header-settings">
+                <svg class="dot_menu" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.25 2.5C7.25 2.91421 7.58579 3.25 8 3.25C8.41421 3.25 8.75 2.91421 8.75 2.5C8.75 2.08579 8.41421 1.75 8 1.75C7.58579 1.75 7.25 2.08579 7.25 2.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.25 8C7.25 8.41421 7.58579 8.75 8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.25 13.5C7.25 13.9142 7.58579 14.25 8 14.25C8.41421 14.25 8.75 13.9142 8.75 13.5C8.75 13.0858 8.41421 12.75 8 12.75C7.58579 12.75 7.25 13.0858 7.25 13.5Z" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    }
+
+    <div class="message-part_container">
+
+        @{
+            if (Model.ChatMessages != null)
+            {
+                foreach (var mes in Model.ChatMessages)
                 {
-                    foreach (var mes in Model.ChatMessages)
+                    if (mes.User.Id == Model.User.Id)
                     {
-                        if (mes.User.Id == Model.User.Id)
-                        {
-                            <div class="right-message">
-                                <div class="message-personal">
-                                    <div class="message-container">
-                                        <div class="message-container_descr">
-                                            <div class="message-container_descr-name">You</div>
-                                            <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
-                                        </div>
-                                        <div class="message-container-content">
-                                            <p>@mes.Content</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="message-fromAnotherUser">
-                                <img src="~/img/placeholder.png" alt="avatar">
+                        <div class="right-message">
+                            <div class="message-personal">
                                 <div class="message-container">
                                     <div class="message-container_descr">
-                                        <div class="message-container_descr-name">@Model.User.UserName</div>
+                                        <div class="message-container_descr-name">You</div>
                                         <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
                                     </div>
                                     <div class="message-container-content">
@@ -199,18 +192,34 @@
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="message-fromAnotherUser">
+                            <img src="~/img/placeholder.png" alt="avatar">
+                            <div class="message-container">
+                                <div class="message-container_descr">
+                                    <div class="message-container_descr-name">@Model.User.UserName</div>
+                                    <div class="message-container_descr-time">@mes.Time.ToString("MM/dd/yyyy HH:mm")</div>
+                                </div>
+                                <div class="message-container-content">
+                                    <p>@mes.Content</p>
+                                </div>
+                            </div>
+                        </div>
                     }
                 }
-                else if (Model.Chats.Count == 0)
-                {
-                    <p>Placeholder for creation</p>
-
-                }
             }
+            else if (Model.Chats.Count == 0)
+            {
+                <p>Placeholder for creation</p>
+
+            }
+        }
 
 
-            @*  <div class="message-fromAnotherUser">
+        @*  <div class="message-fromAnotherUser">
     <img src="img/placeholder.png" alt="avatar">
     <div class="message-container">
       <div class="message-container_descr">
@@ -235,13 +244,69 @@
         </div>
       </div>
     </div>*@
-        </div>
-        <div class="message-part_form">
-            <form action="post">
-                <input placeholder="Input text" type="text">
-                <button type="submit"><img src="~/img/confirm.svg" alt="y"></button>
-            </form>
-        </div>
-    </section></div>
+    </div>
+    <div class="message-part_form">
+        <form action="post">
+            <input id="input" placeholder="Input text" type="text">
+            <button id="submit" type="submit"><img src="~/img/confirm.svg" alt="y"></button>
+        </form>
+    </div>
+</section>
+</div>
 
 @*<partial name="_LoginPartial"/>*@
+@section Scripts{
+    <script type="text/javascript" src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript">
+        let connection = new signalR.HubConnectionBuilder()
+            .withUrl("/Chat")
+            .withAutomaticReconnect()
+            .build();
+
+        let chatId = document.getElementById("ChatId").value;
+        connection.on("ReceiveMessage",
+            function(message) {
+                console.log(message+" in chat"+chatId);
+            });
+
+        connection.on("UserConnected",(connectionId) => {
+            console.log("User log");
+        });
+
+        connection.on("UserDisconnected",(connectionId) => {
+            console.log("User dislog");
+        });
+
+        connection.start().then(() => {
+            console.log("Connection Started");
+            if (chatId!="-1") {
+                connection.invoke("JoinGroup", chatId).catch(function(err) {
+                    return console.error(err.toString());
+                });
+                console.log("Connected to the chat");
+            }
+        });
+       
+        const submit = document.getElementById("submit");
+
+        
+        
+        
+
+
+        submit.addEventListener("click",(e) => {
+            const inputValue = document.getElementById("input").value;
+            if (inputValue != "" && inputValue != null) {
+                connection.invoke("SendMessageToChat", chatId, inputValue).catch((e) => {
+                    return console.error(e.toString());
+                })
+            } else {
+                console.log("Input Should be filled");
+            }
+            e.preventDefault();
+        });
+
+        
+
+    </script>
+}

@@ -2,6 +2,7 @@ using AplicationMessanger.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AplicationMessanger.Data;
+using AplicationMessanger.Hubs;
 using AplicationMessanger.Models.Entity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -51,7 +52,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -73,6 +74,7 @@ app.UseAuthentication();;
 app.UseSession();
 app.UseAuthorization();
 app.MapRazorPages();
+app.MapHub<ChatHub>("/Chat");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -2,6 +2,47 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
+@*<section class="main-panel">
+    <nav>
+        <div class="panel">
+            <div class="logo">
+                <img src="~/img/logo.svg" alt="logo">
+            </div>
+            <div class="panel-menu">
+                <div class="selected">
+                    <a asp-action="Index" asp-controller="Home"><img src="~/img/message.svg" alt="home"></a>
+
+                </div>
+                <div class="">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                        <img src="~/img/account.svg" alt="account">
+                    </a>
+
+                </div>
+
+            </div>
+            <footer>
+                <div class="">
+                    <img src="~/img/settings.svg" alt="settings">
+                </div>
+                <div class="">
+                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                        <button><img src="~/img/exit.svg" alt="exit" class="footer"></button>
+                    </form>
+
+                </div>
+
+            </footer>
+        </div>
+    </nav>
+    <div class="menu-panel">
+        
+        
+
+    </div>
+
+</section>
+*@
 <ul class="nav nav-pills flex-column">
     <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>

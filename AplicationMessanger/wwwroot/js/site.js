@@ -16,10 +16,8 @@ window.addEventListener("resize", () => {
     messages.style.width = +(winSize.offsetWidth - menu.offsetWidth) + "px";
     header.style.width = +(messages.offsetWidth) * 0.7 + "px";
     messageContainer.style.width = +(form.offsetWidth) + "px";
-    console.log("32");
 });
 
 messages.addEventListener("mouseenter", () => {
     messages.style.overflow = 'hidden';
-    console.log("ss");
 });
