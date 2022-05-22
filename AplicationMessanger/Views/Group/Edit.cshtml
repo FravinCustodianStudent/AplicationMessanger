@@ -9,7 +9,7 @@
                 <a asp-action="Index" asp-controller="Home"><img src="~/img/arrow.svg" alt="arrow"></a>
             </div>
             <header>
-                @if (Model.CurrentChat.Avatar != "")
+                @if (Model.CurrentChat.Avatar!=null&& Model.CurrentChat.Avatar != "")
                 {
                     <div class="icon"><img src="~/img/avatars/@Model.CurrentChat.Avatar" alt="ava"></div>
                 }

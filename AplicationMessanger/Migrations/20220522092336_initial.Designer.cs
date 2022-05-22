@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AplicationMessanger.Migrations
 {
     [DbContext(typeof(AplicationMessangerContext))]
-    [Migration("20220516080648_initial")]
+    [Migration("20220522092336_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,11 +113,8 @@ namespace AplicationMessanger.Migrations
 
             modelBuilder.Entity("AplicationMessanger.Models.Entity.Message", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ChatId")
                         .HasColumnType("int");

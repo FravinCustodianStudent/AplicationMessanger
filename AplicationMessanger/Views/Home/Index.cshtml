@@ -197,7 +197,7 @@
                     else
                     {
                         <div class="message-fromAnotherUser">
-                            <img src="~/img/@mes.User.Avatar" alt="avatar">
+                            <img src="~/img/avatars/@mes.User.Avatar" alt="avatar">
                             <div class="message-container">
                                 <div class="message-container_descr">
                                     <div class="message-container_descr-name">@mes.User.UserName</div>
@@ -283,14 +283,14 @@
                                 </div>
                             </div>`;
                     messageContainer.innerHTML = inner;
-                    
+                    messageContainer.className = "right-message";
                     messageContainerPart.appendChild(messageContainer);
-                    message.style.className = "right-message";
+                    
                     
                 } else {
                     const messageContainer = document.createElement("div");
-                    
-                    const inner = `<img src="~/img/`+pathToImage+`" alt="avatar">
+                    messageContainer.className = "message-fromAnotherUser";
+                    const inner = `<img src="img/avatars/`+pathToImage+`" alt="avatar">
                             <div class="message-container">
                                 <div class="message-container_descr">
                                     <div class="message-container_descr-name">`+userName+`</div>
@@ -301,10 +301,10 @@
                                 </div>
                             </div>`;
                     messageContainer.innerHTML = inner;
-                   
+                    
                     messageContainerPart.appendChild(messageContainer);
                     
-                    message.style.className = "fromAnotherUser";
+                    
 
                 }
                 console.log(message+" in chat "+chatId + " by " + userId + " on " +date );

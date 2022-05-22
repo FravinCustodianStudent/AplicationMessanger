@@ -1,5 +1,6 @@
 ﻿using AplicationMessanger.Areas.Identity.Data;
 using AplicationMessanger.Data;
+using AplicationMessanger.Models.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
@@ -21,6 +22,16 @@ namespace AplicationMessanger.Hubs
             string pathToImage = User.Avatar;
             string userName = User.UserName;
             string time = now.ToString("MM/dd/yyyy HH:mm");
+            var chat = _bd.Chats.FirstOrDefault(c => c.Id == chatId);
+            var Message = new Message();
+            Message.Chat = chat;
+            Message.ChatId = int.Parse(chatId);
+            Message.Content = message;
+            Message.Id = Guid.NewGuid().ToString();
+            Message.Time = now;
+            Message.User = _userManager.Users.FirstOrDefault(u => u.Id == userId);
+            _bd.Messages.Add(Message);
+            _bd.SaveChanges();
             return Clients.Group(chatId).SendAsync("ReceiveMessage",message,time,userId,pathToImage,userName);
         }
 

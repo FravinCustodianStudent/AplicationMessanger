@@ -136,7 +136,6 @@ namespace AplicationMessanger.Controllers
         }
 
         [HttpPost]
-
         public IActionResult Edit(ChatChangeVM chatForUpdate)
         {
             if (ModelState.IsValid)

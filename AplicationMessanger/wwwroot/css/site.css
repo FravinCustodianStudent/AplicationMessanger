@@ -525,25 +525,28 @@ nav {
         .message-part .message-part_container::-webkit-scrollbar-thumb {
             background: #888;
         }
-
+.message-part .message-part_container .message-fromAnotherUser {
+    margin-top: 10px;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
     .message-part .message-fromAnotherUser img {
+        margin-top: 25px;
         width: 49px;
         height: 49px;
         border-radius: 50%;
+        margin-right: 14px;
     }
 
-    .message-part .message-part_container .message-fromAnotherUser {
-        margin-top: 10px;
-        max-width: 500px;
-        display: flex;
-        align-items: center;
-    }
+
 
     .message-part .message-part_container .message-container {
-        margin-left: 14px;
+        min-width: 130px;
+        width: 100%;
     }
 
-    .message-part .message-part_container .message-fromAnotherUser .message-container_descr {
+    .message-part .message-part_container .message-fromAnotherUser .message-container .message-container_descr {
         display: flex;
         position: relative;
         width: 100%;
