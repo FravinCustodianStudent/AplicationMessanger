@@ -1128,3 +1128,144 @@ nav {
                 font-size: 21px;
                 color: #FFFFFF;
             }
+
+
+
+.nav {
+    z-index: 6;
+    transition: 1s;
+}
+
+.back {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: #ededed;
+    opacity: 70%;
+    z-index: 4;
+    visibility: hidden;
+}
+
+.closeNavMenu {
+    visibility: hidden;
+    z-index: 5;
+    top: 65px;
+    width: 30px;
+    position: absolute;
+    right: 25px;
+}
+
+.menu-button {
+    visibility: hidden;
+    margin-top: 55px;
+    position: absolute;
+    left: 10px
+}
+
+.menu_panel-button {
+    z-index: 2;
+    position: absolute;
+    top: 72px;
+    left: 2px;
+    visibility: hidden;
+}
+
+.menu_panel-button img {
+    width: 30px;
+    height: 30px;
+}
+
+.menuActive {
+    position: absolute;
+    visibility: visible;
+    left: 0;
+}
+
+.menu-button img:hover {
+    color: #FCA311;
+}
+
+.menu-button img {
+    width: 45px;
+}
+
+.close-button {
+    position: absolute;
+    right: 25px;
+    top: 65px;
+    visibility: hidden;
+    width: 30px;
+    z-index: 3;
+}
+
+.message-part {
+    position: relative;
+}
+
+@media (max-width: 1024px) {
+    .main-panel {
+        z-index: 1;
+        position: absolute;
+        visibility: hidden;
+        left: -100%;
+        transition: 1.5s all;
+    }
+
+    .menu-button {
+        visibility: visible;
+    }
+
+    .message-part {
+        box-sizing: border-box;
+        height: 100vh;
+        width: 100%;
+        padding: 0;
+    }
+
+    .message-part .message-part_container {
+        margin-top: 120px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .message-part .message-part_header .message-part_header-descr h2 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 425px) {
+    .nav {
+        left: -100%;
+    }
+
+    .main-panel {
+        width: 100%;
+    }
+
+    .menu_panel-button {
+        visibility: visible;
+    }
+
+    nav {
+        position: absolute;
+        width: 75px;
+        visibility: hidden;
+    }
+
+    .panel {
+        position: relative;
+    }
+
+    .panel-menu {
+        width: 59px;
+    }
+
+    .menu-panel_groups {
+        height: 71%;
+    }
+
+    .message-part .message-part_form form input {
+        padding: 0 32px;
+    }
+}

@@ -4,7 +4,11 @@
 <div class="main">
 
 <section class="main-panel">
-    <nav>
+    <img class="closeNavMenu" src="~/img/close.svg" alt="png">
+    <div class="back">
+
+    </div>
+    <nav class="nav">
         <div class="panel">
             <div class="logo">
                 <img src="~/img/logo.svg" alt="logo">
@@ -36,6 +40,10 @@
             </footer>
         </div>
     </nav>
+    <div class="close-button">
+        <img src="~/img/close.svg" alt="close">
+    </div>
+    <div class="menu_panel-button"><img src="~/img/menu.svg" alt="menu"></div>
     <div class="menu-panel">
         <div class="menu-panel_header">
             <a asp-controller="Group" asp-action="Index"><img src="~/img/plus-circle.svg" alt="circle"></a>
@@ -127,6 +135,9 @@
 
 </section>
 <section class="message-part">
+    <div class="menu-button">
+        <img src="~/img/menu.svg" alt="menu">
+    </div>
     @if (Model.chat != null)
     {
         <input type="text" value="@Model.chat.Id" hidden id="ChatId"/>
@@ -247,9 +258,9 @@
     </div>
     <div class="message-part_form">
         <form action="post">
-            <input id="input" placeholder="Input text" type="text">
-            <button id="submit" type="submit"><img src="~/img/confirm.svg" alt="y"></button>
-        </form>
+            <input class="input" id="input" placeholder="Input text" type="text">
+            <button class="inputBtn" id="submit" type="submit"><img src="~/img/confirm.svg" alt="y"></button>
+        </form >
     </div>
 </section>
 </div>
